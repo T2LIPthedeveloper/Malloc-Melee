@@ -1,0 +1,13 @@
+This will contain the engine built in C from scratch.
+
+Engine for the text-based RPG would include the following features:
+- A parser to interpret the player's input
+- Player inventory
+- Player stats
+- Player location
+- NPC interactions
+- World interactions
+- Combat system
+- Saving and loading the game
+
+Ideally we'd like to have multiple levels, each with a different theme and different enemies to fight. The player would have to navigate through the levels, fighting enemies and collecting items to progress. The combat system would be turn-based, with the player and enemies taking turns to attack each other.

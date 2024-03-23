@@ -1,0 +1,11 @@
+This folder would contain the player saves.
+
+Save information would include:
+- Location
+- Stats like health, attack, defense, etc.
+- Inventory
+- Quest progress
+
+Ideally since the game is text-based and built from scratch in C without libraries, the save files would be in a simple text format that can be easily read and written by the game engine.
+
+A good format for the saves would be something like JSON with the name of the save being the file name and the contents being the save data. This would allow for easy serialization and deserialization of the save data.
