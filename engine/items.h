@@ -1,19 +1,18 @@
-#ifndef ITEMS_H
-#define ITEMS_H
+#ifndef ITEMS_HG
+#define ITEMS_HG
 
-/* types of items */
+/* Enum of possible collectible items */
 typedef enum {
-    WEAPON,
-    POTION,
-    ARMOR,
-    KEY
-} ItemType;
+    WEBRUNE = (short)1,
+    KEYRING,
+    OLDENBLING
+}Collectible;
 
-/* UsefulItem struct under which items can be stored */
-typedef struct {
-    char *name; /* item name */
-    short value; /* value of item */
-    ItemType type; /* type of item */
-} UsefulItem;
+/* Represents an item that has a name, verb, and associated value */
+struct ValuedItem {
+    char name[13];
+    char verb[6];
+    short * value;
+};
 
 #endif

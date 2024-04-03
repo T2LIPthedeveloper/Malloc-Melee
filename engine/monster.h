@@ -1,19 +1,15 @@
-#ifndef MONSTER_H
-#define MONSTER_H
+#ifndef MONSTERS_HG
+#define MONSTERS_HG
 
 struct Monster {
-    char * name;
-    short max_health;
+    char *name;
     short health;
-    short attack;
-    short defence;
-    char* attack_messages[3]; /* Descriptions of the monster's attacks */
-    int attack_type_count;
-    char* defense_messages[3]; /* Descriptions of the monster's defenses */
-    int defense_type_count;
-    char* death_message; /* Message displayed when the monster dies */
-    char* victory_message; /* Message displayed when the player defeats the monster */
-    char* defeat_message; /* Message displayed when the monster defeats the player */
+    short attack; // The amount of damage done by a successful attack
+    short defense; // Defense value determines the chance of a defense being successful. >=10 is unbeatable
+    char *attack_descriptions[3]; // descriptions of the different attacks the monster can perform
+    int attack_description_count;
+    char *defense_descriptions[3]; // descriptions of the different defensive actions the monster can perform
+    int defense_description_count;
 };
 
 #endif

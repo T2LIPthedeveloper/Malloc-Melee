@@ -2,45 +2,89 @@
 #include <stdlib.h>
 #include <string.h>
 #include "./save_system.h"
+#include "./player.h"
+#include "./items.h"
 
-// Function to save player details to a file
-int savePlayerToFile(const Player *player, const char *filename) {
-    char filepath[100]; // Adjust size as needed
-    sprintf(filepath, "saves/%s", filename); // Append "saves/" to the filename
-
-    FILE *file = fopen(filepath, "wb"); // Open the file for writing in binary mode
-    
-    if (file == NULL) {
-        perror("Error opening file");
-        return 0; // Return 0 to indicate failure
+int save_game(struct Player *player)
+{
+    FILE *file = fopen("savegame.txt", "w");
+    if(file == NULL)
+    {
+        printf("Error opening file: savegame.txt\n");
+        return;
     }
     
-    // Write player details to the file
-    fwrite(player, sizeof(Player), 1, file);
-
-    // Close the file
+    fprintf(file, "%s\n", player->name);
+    fprintf(file, "%d\n", player->max_health);
+    fprintf(file, "%d\n", player->health);
+    fprintf(file, "%s\n", player->weapon.name);
+    fprintf(file, "%s\n", player->weapon.verb);
+    fprintf(file, "%d\n", player->weapon.value);
+    fprintf(file, "%s\n", player->defense.name);
+    fprintf(file, "%s\n", player->defense.verb);
+    fprintf(file, "%d\n", player->defense.value);
+    fprintf(file, "%d\n", player->collectable_count);
+    for(int i = 0; i < player->collectable_count; i++)
+    {
+        fprintf(file, "%d\n", player->collectibles[i]);
+    }
+    
     fclose(file);
-
-    return 1; // Return 1 to indicate success
 }
 
-// Function to load player details from a file
-int loadPlayerFromFile(Player *player, const char *filename) {
-    char filepath[100]; // Adjust size as needed
-    sprintf(filepath, "saves/%s", filename); // Append "saves/" to the filename
+Player * load_game(char * filename)
+{
+    FILE *file = fopen(filename, "r");
+    if(file == NULL)
+    {
+        printf("Error opening file: savegame.txt\n");
+        return NULL;
+    }
 
-    FILE *file = fopen(filepath, "rb"); // Open the file for reading in binary mode
+    /* Malloc for new player */
+    struct Player * player = malloc(sizeof(struct Player));
+    struct ValuedItem * weapon = malloc(sizeof(struct ValuedItem));
+    struct ValuedItem * defense = malloc(sizeof(struct ValuedItem));
     
-    if (file == NULL) {
-        perror("Error opening file");
-        return 0; // Return 0 to indicate failure
+    char line[256];
+    fgets(line, sizeof(line), file);
+    line[strlen(line) - 1] = '\0'; // Remove newline character
+    player->name = strdup(line);
+    
+    fgets(line, sizeof(line), file);
+    player->max_health = atoi(line);
+    
+    fgets(line, sizeof(line), file);
+    player->health = atoi(line);
+
+    fgets(line, sizeof(line), file);
+    *weapon->name = strdup(line);
+
+    fgets(line, sizeof(line), file);
+    *weapon->verb = strdup(line);
+
+    fgets(line, sizeof(line), file);
+    *weapon->value = atoi(line);
+
+    fgets(line, sizeof(line), file);
+    *defense->name = strdup(line);
+
+    fgets(line, sizeof(line), file);
+    *defense->verb = strdup(line);
+
+    fgets(line, sizeof(line), file);
+    *defense->value = atoi(line);
+
+    player->weapon = *weapon;
+    player->defense = *defense;
+    
+    for(int i = 0; i < player->collectable_count; i++)
+    {
+        fgets(line, sizeof(line), file);
+        player->collectibles[i] = atoi(line);
     }
     
-    // Read player details from the file
-    fread(player, sizeof(Player), 1, file);
-
-    // Close the file
     fclose(file);
 
-    return 1; // Return 1 to indicate success
+    return player;
 }

@@ -1,73 +1,49 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "./player.h"
-#include "./items.h"
+#include "player.h"
+#include "items.h"
 
-/* Add item to inventory */
-void addItemToInventory(Player * player, UsefulItem * item) {
-    /* malloc inventory */
-    UsefulItem * temp = malloc ((player->item_count + 1) * sizeof(UsefulItem));
-    if (temp == NULL) {
-        printf("Memory allocation error!\n");
-        exit(EXIT_FAILURE);
-    }
-    /* copy inventory to temp */
-    for (int i = 0; i < player->item_count; i++) {
-        temp[i] = player->inventory[i];
-    }
-    /* free inventory */
-    free(player->inventory);
-    /* add item to inventory */
-    temp[player->item_count] = *item;
-    player->inventory = temp;
-    player->item_count++;
+/* The player's starting weapon -- their hands */
+struct ValuedItem getPlayerInitialWeapon()
+{
+    struct ValuedItem playerInitialWeapon = { "hands", "punch", (short)5 };
+    return playerInitialWeapon;
 }
-/* Remove item from inventory */
-void removeItemFromInventory(Player * player, UsefulItem * item) {
-    /* malloc inventory */
-    UsefulItem * temp = malloc ((player->item_count - 1) * sizeof(UsefulItem));
-    if (temp == NULL) {
-        printf("Memory allocation error!\n");
-        exit(EXIT_FAILURE);
-    }
-    /* copy inventory to temp */
-    int j = 0;
-    for (int i = 0; i < player->item_count; i++) {
-        if (&player->inventory[i] != item) {
-            temp[j] = player->inventory[i];
-            j++;
-        }
-    }
-    /* free inventory */
-    free(player->inventory);
-    /* remove item from inventory */
-    player->inventory = temp;
-    player->item_count--;
-    if (player->item_count == 0) {
-        player->inventory = NULL;
-    }
-    
+
+/* The player's starting shield -- their hands */
+struct ValuedItem getPlayerInitialDefense()
+{
+    struct ValuedItem playerInitialDefense = { "hands", "block", (short)3 };
+    return playerInitialDefense;
 }
-/* Does the player have the necessary item? */
-int hasItem(Player * player, UsefulItem * item) {
-    for (int i = 0; i < player->item_count; i++) {
-        if (&player->inventory[i] == item) {
+
+
+
+/* Add collectible to player's collectibles array */
+void addCollectibleToPlayer(struct Player *player, Collectible collectible)
+{
+    player->collectibles[player->collectable_count] = collectible;
+    player->collectable_count++;
+}
+
+/* Does the player have a specific collectible */
+int playerHasCollectable(struct Player *player, Collectible collectible)
+{
+    for(int i = 0; i < player->collectable_count; i++)
+        if(player->collectibles[i] == collectible)
             return 1;
-        }
-    }
+    
     return 0;
 }
-/* Create a player without the current location */
-void createPlayer(Player * player, char * name) {
-    player->name = name;
-    player->max_health = 100;
-    player->health = 100;
-    player->attack = 10;
-    player->defence = 5;
-    player->inventory = NULL;
-    player->item_count = 0;
-    player->weapon = NULL;
-    player->armour = NULL;
-    player->curr_loc = NULL;
+
+/* Create an initialised player (doesn't initialise the current_location) */
+struct Player createPlayer(char *name)
+{
+    struct Player player;
+    player.name = name;
+    player.max_health = 100;
+    player.health = player.max_health;
+    player.weapon = getPlayerInitialWeapon();
+    player.defense = getPlayerInitialDefense();
+    player.collectable_count = 0;
+    
+    return player;
 }

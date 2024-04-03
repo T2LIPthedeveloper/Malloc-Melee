@@ -1,11 +1,14 @@
 #ifndef SAVE_SYSTEM_H
 #define SAVE_SYSTEM_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "./player.h"
+#include "./items.h"
 
-// Function prototypes
-int savePlayerToFile(const Player *player, const char *filename);
-
-int loadPlayerFromFile(Player *player, const char *filename);
+/* load and save functions for player state */
+Player * load_game(char *filename);
+int save_game(struct Player *player);
 
 #endif

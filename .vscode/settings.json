@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "items.h": "c"
+        "items.h": "c",
+        "corridor8.h": "c"
     }
 }

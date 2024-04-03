@@ -1,36 +1,34 @@
-# ifndef PLAYER_H
-# define PLAYER_H
-#include "./items.h"
+#ifndef PLAYER_HG
+#define PLAYER_HG
+#include "items.h"
 
 typedef struct Player Player;
 
-/* func pointer type for locations to be used in game for executing location-specific plays */
+/* Function pointer type for "locations" */
 typedef void (*Location)(struct Player *);
 
-/* Details typically found in a player */
+
+/* Represents a player's details */
 struct Player {
-    char * name;
+    char *name;
     short max_health;
     short health;
-    short attack;
-    short defence;
-    UsefulItem * inventory; /* Inventory of player, contains items that can be used in game */
-    short item_count; /* Number of items in inventory */
-    struct UsefulItem * weapon; /* Weapon value = amount of damage done by successful attack */
-    struct UsefulItem * armour; /* Defense value = amount of damage reduced by successful attack + chance of successful defense */
-    Location curr_loc; /* Location of player in game */
+    Collectible collectibles[3];
+    short collectable_count; //How many collected items are in the collectibles array?
+    struct ValuedItem weapon; // Weapon value is the amount of damage done by a successful attack
+    struct ValuedItem defense; // Defense value determines the chance of a defense being successful. >=10 is unbeatable
+    Location current_location;
 };
 
-/* Add item to inventory */
-void addItemToInventory(Player * player, UsefulItem * item);
 
-/* Remove item from inventory */
-void removeItemFromInventory(Player * player, UsefulItem * item);
+/* Add collectible to player's collectibles array */
+void addCollectibleToPlayer(struct Player *player, Collectible collectible);
 
-/* Does the player have the necessary item? */
-int hasItem(Player * player, UsefulItem * item);
+/* Does the player have a specific collectible */
+int playerHasCollectable(struct Player *player, Collectible collectible);
 
-/* Create a player without the current location */
-void createPlayer(Player * player, char * name);
+
+/* Create an initialised player (doesn't initialise the current_location) */
+struct Player createPlayer(char *name);
 
 #endif
