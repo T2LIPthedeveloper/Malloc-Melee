@@ -1,5 +1,6 @@
 # ifndef PLAYER_H
 # define PLAYER_H
+#include "./items.h"
 
 typedef struct Player Player;
 
@@ -11,9 +12,12 @@ struct Player {
     char * name;
     short max_health;
     short health;
+    short attack;
+    short defence;
     UsefulItem * inventory; /* Inventory of player, contains items that can be used in game */
-    struct UsefulItem * weapon; /* Damage done by successful attack, has weapon name and attack amount */
-    struct UsefulItem * armour; /* Damage absorbed by successful attack, has armour name and defence amount, plus chance of successful defense (to be confirmed) */
+    short item_count; /* Number of items in inventory */
+    struct UsefulItem * weapon; /* Weapon value = amount of damage done by successful attack */
+    struct UsefulItem * armour; /* Defense value = amount of damage reduced by successful attack + chance of successful defense */
     Location curr_loc; /* Location of player in game */
 };
 
