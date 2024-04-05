@@ -5,11 +5,11 @@ int makeChoice(Choice choices[], int num_choices)
 {
     static short choice_already_taken = 0;
     
-    printf("What do you do?\n");
+    printf("You must choose.\n");
     
     if(!choice_already_taken)
     {
-        printf("(Enter the number of your selection, and press enter.)\n");
+        printf("Type the number corresponding to your selection and press ENTER.\n");
         choice_already_taken = 1;
     }
     

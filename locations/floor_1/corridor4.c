@@ -5,7 +5,7 @@
 #include "../../engine/monster.h"
 #include "../../engine/util.h"
 #include "corridor3.h"
-#include "../forest/corridor5.h"
+#include "../floor_2/corridor5.h"
 #include "corridor4.h"
 
 /* The third part of the corridor after the mess hall */

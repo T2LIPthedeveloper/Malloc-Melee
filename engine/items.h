@@ -10,9 +10,9 @@ typedef enum {
 
 /* Represents an item that has a name, verb, and associated value */
 struct ValuedItem {
-    char name[13];
-    char verb[6];
-    short * value;
+    char *name;
+    char *verb;
+    short value;
 };
 
 #endif

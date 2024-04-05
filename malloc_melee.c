@@ -5,6 +5,8 @@
 #include "./engine/util.h"
 #include "./locations/floor_1/prison.h"
 #include "./engine/save_system.h"
+#include "./engine/main_menu.h"
+#include "./engine/choice.h"
 
 int main()
 {
@@ -13,10 +15,17 @@ int main()
     Player player;
 
     /* display main menu */
-    displayMainMenu();
+    display_main_menu();
     
     /* get user input */
-    int choice = getUserInput(1, 3);
+    Choice options[3] = {
+        { 1, "New Game" },
+        { 2, "Load Game" },
+        { 3, "Exit" }
+    };
+
+    short choice = makeChoice(options, 3);
+
     if (choice == 1) {
         /* Ask for player name first */
         printf("Enter your name: ");

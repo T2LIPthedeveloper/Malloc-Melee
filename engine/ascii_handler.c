@@ -3,22 +3,25 @@
 #include <string.h>
 #include "./ascii_handler.h"
 
-void display_ascii_art(char *filename)
+int display_ascii_art(char *filename)
 {
-    FILE *file = fopen(filename, "r");
-    if(file == NULL)
+    FILE *fp = fopen(filename, "r");
+
+    if (fp == NULL)
     {
-        printf("Error opening file: %s\n", filename);
-        return;
+        return 1;
     }
-    
-    char line[256];
-    while(fgets(line, sizeof(line), file))
-    {
-        printf("%s", line);
-    }
-    
-    fclose(file);
+
+    // read one character at a time and
+    // display it to the output
+    char ch;
+    while ((ch = fgetc(fp)) != EOF)
+        putchar(ch);
+
+    // close the file
+    fclose(fp);
+    printf("\n");
+    return 0;
 }
 
 

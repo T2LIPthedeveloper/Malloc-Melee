@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "../../engine/player.h"
 #include "../../engine/choice.h"
-#include "../forest/room_with_chimney.h"
+#include "../floor_2/room_with_chimney.h"
 #include "corridor9.h"
 #include "corridor8.h"
 

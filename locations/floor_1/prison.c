@@ -5,34 +5,51 @@
 #include "../../engine/items.h"
 #include "corridor1.h"
 #include "prison.h"
-
+#include "../../engine/ascii_handler.h"
+#include "../../engine/save_system.h"
 
 /* The starting point of the game */
 void prisonCell1(struct Player *player)
 {
-    static short hasReadFullDescription = 0;
-    char *basicDesc = "The walls are damp, and there is a strange smell.";
+    static short fullDescRead = 0;
+    char *simpleDesc = "The walls ooze with a clammy chill, and an unsettling scent lingers in the air, haunting every breath...";
     
-    if(hasReadFullDescription)
+    display_ascii_art("./assets/prison_cell_alt.txt");
+    if(fullDescRead)
     {
-        printf("%s\n\n", basicDesc);
+        printf("%s\n\n", simpleDesc);
     }
     else
     {
-        printf("You wake up in a dark dungeon. You have no idea how you got here.\n\n");
-        printf("%s..\n\n", basicDesc);
-        printf("You realise that the smell is you... you'd had some bad sushi before you were knocked unconscious.\n\n");
-        printf("You can see that you are in a cell, but it looks like the cell door was left unlocked.\n\n");
-        hasReadFullDescription = 1;
+        printf("Your eyes flutter open to a pitch-black dungeon, the air heavy with ancient whispers, \nand your mind devoid of memories like a forgotten specter in this sinister abyss.\n\n");
+        printf("%s..\n\n", simpleDesc);
+        printf("You realise... it's YOUR breath. You think to yourself, \"What the hell did I eat last night?\"\n\n");
+        printf("The cell looms before you, its door ajar. You get a sudden rush of freedom, but dread what lies before you.\n\n");
+        fullDescRead = 1;
     }
     
-    Choice options[2] = {
+    Choice options[3] = {
         { 0, "Leave the cell." },
-        { 1, "Stay here and feel sorry for yourself." }
+        { 1, "Stay here and feel sorry for yourself." },
+        {2, "Wait... maybe you want to save your state. Do you?"}
     };
     
-    int result = makeChoice(options, 2);
+    int result = makeChoice(options, 3);
     
+    if(result == 2)
+    {
+        int save_result;
+        save_result = save_game(player);
+        if (save_result == 0)
+        {
+            printf("Game saved successfully.\n");
+        }
+        else
+        {
+            printf("Error saving game.\n");
+        }
+    }
+    else
     if(result == 0)
         player->current_location = &prisonCorridor;
 }
@@ -41,6 +58,7 @@ void prisonCell1(struct Player *player)
 /* Looking into the second prison cell -- The first of 2 lovers */
 void prisonCell2(struct Player *player)
 {
+    display_ascii_art("./assets/prison_cell.txt");
     printf("You can see a skeleton in the cell.\n");
     printf("The skeleton is leant up against the wall to the right.\n\n");
     promptToPressEnter("step back");
@@ -50,6 +68,7 @@ void prisonCell2(struct Player *player)
 /* Looking into the third prison cell -- The second of 2 lovers */
 void prisonCell3(struct Player *player)
 {
+    display_ascii_art("./assets/prison_cell.txt");
     printf("You can see a skeleton in the cell.\n");
     printf("The skeleton is leant up against the wall to the left.\n\n");
     promptToPressEnter("step back");
@@ -59,6 +78,7 @@ void prisonCell3(struct Player *player)
 /* The forth prison cell. */
 void prisonCell4(struct Player *player)
 {
+    display_ascii_art("./assets/prison_cell_alt.txt");
     printf("You are standing in an empty prison cell.\n");
     if(!playerHasCollectable(player, KEYRING))
     {
