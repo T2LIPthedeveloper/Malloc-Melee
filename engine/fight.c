@@ -177,7 +177,7 @@ int runCombat(struct Player *player, struct Monster *monster)
         printHealthInfo(player, monster);
         
         // Determine actions
-        int choice = makeChoice(playerChoices, 3);
+        int choice = choose(playerChoices, 3);
         short broDoBeRepeating = tooManyActionRepeats(choice);
         
         short enemyDefends;

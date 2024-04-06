@@ -5,24 +5,21 @@
 #include "../../engine/items.h"
 #include "../../engine/monster.h"
 #include "../../engine/fight.h"
-#include "corridor9.h"
+#include "final_corridor.h"
 #include "treasure_room.h"
 
 /* The chest that contains the Olden Bling */
 void treasureChest(struct Player *player)
 {
-    if(playerHasCollectable(player, OLDENBLING))
+    if(playerHasCollectable(player, MALLOC_MASK))
         printf("The chest is empty.\n");
     else
     {
         printf("You open the chest, and find that there is only one piece of treasure inside.\n");
-        printf("You pick it up, and examine it. It is a golden bracelet, with a small plaque on one side.\n");
-        printf("The plaque has letters engraved into it: G.A.N.G.S.T.A\n\n");
-        
-        printf("You stand up, having suddenly realised that this bracelet matches the description of the legendary Olden Bling!\n");
-        printf("It was said that this piece of jewellery would give the one wearing it the strength of 20 men!\n\n");
-        
-        addCollectibleToPlayer(player, OLDENBLING);
+        printf("It is a golden mask, with a large red gem in the centre.\n");
+        printf("Then it hits you. This thing is the Malloc Mask!\n");
+        printf("The sheer amount of memory it can allocate is staggering. Enough to make you feel invincible.\n\n Enough to (somehow) defeat the dreaded :(){ :|: & };:\n");
+        addCollectibleToPlayer(player, MALLOC_MASK); //Don't ask me how infinite memory can defeat a fork bomb
     }
     
     promptToPressEnter("step back");
@@ -33,48 +30,47 @@ void treasureChest(struct Player *player)
 /* The treasure room */
 void treasureRoom(struct Player *player)
 {
-    static struct Monster soldier = {
-        .name = "soldier",
+    static struct Monster fortress_guard = {
+        .name = "fortress guard",
         .health = 100,
         .attack = 13,
         .defense = 7,
         .attack_description_count = 1,
         .attack_descriptions = { 
-            "Soldier swings his axe at you."
+            "The fortress guard swings his axe at you."
         },
         .defense_description_count = 1,
-        .defense_descriptions = { "Soldier blocks with his shield." }
+        .defense_descriptions = { "The fortress guard blocks with his shield." }
     };
     
-    short soldierIsAlive = (soldier.health > 0);
+    short guardAlive = (fortress_guard.health > 0);
     
+    printf("You're standing in a room that is filled with treasure. Or at least, it would be if there was any.\n");
+    printf("There are two large windows on the far wall, and a chest in the corner.\n");
     
-    printf("You are in a large room. There are mounds of gold and jewels piled up against the walls.\n");
-    printf("In the far corner, you notice a chest. It has a padlock on it, but the padlock is open.\n\n");
-    
-    if(soldierIsAlive)
+    if(guardAlive)
     {
-        printf("In the centre of the room, there stands a soldier.\n");
-        printf("He is wearing a silver suit of armour, though there are some gaps in it.\n");
-        printf("He is holding a golden shield, and a large axe.\n\n");
+        printf("In the centre of the room, there stands a fortress guard.\n");
+        printf("He is wearing a suit of armour, with a helmet that has a large red plume.\n");
+        printf("He is holding a large axe, and looks like he's ready to fight.\n");
     }
     
     
     Choice options[2] = {
         { 0, "Go back out into the corridor." },
-        { 1, (soldierIsAlive) ? "Fight the soldier." : "Open the chest in the corner." }
+        { 1, (guardAlive) ? "Fight the fortress guard." : "Open the chest in the corner." }
     };
     
-    short result = makeChoice(options, 2);
+    short result = choose(options, 2);
     
     if(result == 0)
-        player->current_location = &corridor9;
+        player->current_location = &final_corridor;
     else
     {
-        if(soldierIsAlive)
+        if(guardAlive)
         {
             clearScreen();
-            short fightResult = runCombat(player, &soldier);
+            short fightResult = runCombat(player, &fortress_guard);
             if(fightResult == 0)
                 player->current_location = NULL; 
             else

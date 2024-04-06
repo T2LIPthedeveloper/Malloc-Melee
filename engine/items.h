@@ -3,9 +3,9 @@
 
 /* Enum of possible collectible items */
 typedef enum {
-    WEBRUNE = (short)1,
-    KEYRING,
-    OLDENBLING
+    BURNT_CIGAR = (short)1,
+    KEY_RING,
+    MALLOC_MASK
 }Collectible;
 
 /* Represents an item that has a name, verb, and associated value */

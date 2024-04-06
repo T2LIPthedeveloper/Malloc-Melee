@@ -3,6 +3,6 @@
 #include "../../engine/player.h"
 
 /* Corridor after the banquet hall */
-void corridor7(struct Player *player);
+void seventh_corridor(struct Player *player);
 
 #endif

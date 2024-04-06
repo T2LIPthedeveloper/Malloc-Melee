@@ -1,5 +1,5 @@
-#ifndef ROOMWITHCHIMNEY_HG
-#define ROOMWITHCHIMNEY_HG
+#ifndef FIREPLACEROOM_HG
+#define FIREPLACEROOM_HG
 #include <stdio.h>
 #include "../../engine/player.h"
 #include "../../engine/choice.h"
@@ -7,10 +7,10 @@
 #include "../../engine/fight.h"
 #include "../../engine/monster.h"
 #include "../../engine/items.h"
-#include "corridor7.h"
-#include "../floor_3/corridor8.h"
+#include "seventh_corridor.h"
+#include "../floor_3/eighth_corridor.h"
 
 /* Last fight of the 2nd floor */
-void roomWithChimney(struct Player *player);
+void fireplace_room(struct Player *player);
 
 #endif

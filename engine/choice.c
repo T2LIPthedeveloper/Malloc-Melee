@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "choice.h"
 
-int makeChoice(Choice choices[], int num_choices)
+int choose(Choice choices[], int num_choices)
 {
     static short choice_already_taken = 0;
     

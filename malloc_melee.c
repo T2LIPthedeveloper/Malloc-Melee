@@ -24,7 +24,7 @@ int main()
         { 3, "Exit" }
     };
 
-    short choice = makeChoice(options, 3);
+    short choice = choose(options, 3);
 
     if (choice == 1) {
         /* Ask for player name first */
@@ -33,7 +33,7 @@ int main()
         fgets(name, 50, stdin);
         name[strlen(name) - 1] = '\0'; // Remove newline character
         player = createPlayer(name);
-        player.current_location = &prisonCell1;
+        player.current_location = &firstCell;
     } else if (choice == 2) {
         /* get name of player */
         char save[50];

@@ -6,6 +6,6 @@ typedef struct {
     char* optionStr;
 }Choice;
 
-int makeChoice(Choice choices[], int num_choices);
+int choose(Choice choices[], int num_choices);
 
 #endif

@@ -4,7 +4,7 @@
 
 
 /* The starting point of the game */
-void prisonCell1(struct Player *player);
+void firstCell(struct Player *player);
 
 /* The corridor outside the prison cells */
 void prisonCorridor(struct Player *player);
