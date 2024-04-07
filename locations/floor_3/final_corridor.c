@@ -7,10 +7,12 @@
 #include "treasure_room.h"
 #include "final_corridor.h"
 #include "../../engine/save_system.h"
+#include "../../engine/ascii_handler.h"
 
 /* The text that appears when the player finishes the game */
 void endGameText()
 {
+    display_ascii_art("./assets/outside.txt");
     printf("All of that fighting's got you feeling pretty tired.\n");
     printf("You manage to make it to the door, and push it open.\n");
     printf("You've managed to escape the grasp of that preposterous Chief.\n");
@@ -25,7 +27,7 @@ void endGameText()
 void final_corridor(struct Player *player)
 {
     static short triedToOpenDoorBefore = 0; // tried opening without the Malloc Mask
-    
+    display_ascii_art("./assets/hallway.txt");
     printf("You're standing in a corridor, with a staircase leading down to the floor below.\n");
     printf("There is a door at the opposite end of the corridor.\n");
     printf("Halfway down the corridor, there is a large door on the left. Some big guy is sat next to it.\n");
@@ -70,7 +72,7 @@ void final_corridor(struct Player *player)
     else if (result == 3)
     {
         int saveResult;
-        saveResult = saveGame(player);
+        saveResult = save_game(player);
         if(saveResult == 0)
             printf("Game saved successfully.\n");
         else

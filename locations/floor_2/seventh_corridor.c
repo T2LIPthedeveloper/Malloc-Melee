@@ -6,12 +6,14 @@
 #include "dining_room.h"
 #include "fireplace_room.h"
 #include "seventh_corridor.h"
+#include "../../engine/ascii_handler.h"
 
 /* Corridor after the dining room... close to finishing the second floor */
 void seventh_corridor(struct Player *player)
 {
     static short playerHasShield = 0;
     
+    display_ascii_art("./assets/hallway.txt");
     printf("You're standing in a corridor, with armoured suits lined up along both walls.\n");
     printf("One of the suits has a moustache painted on its helmet.\n");
     printf("At the end of the corridor, you see a door.\n");
@@ -31,6 +33,7 @@ void seventh_corridor(struct Player *player)
     else
     {
         clearScreen();
+        display_ascii_art("./assets/knight.txt");
         printf("You walk up to the suit with the moustache, and notice a shield leaning against it.\n");
         printf("It's a steel shield, with a dragon painted on it. It looks like it's seen some action.\n");
         

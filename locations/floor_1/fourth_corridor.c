@@ -5,8 +5,9 @@
 #include "../../engine/monster.h"
 #include "../../engine/util.h"
 #include "third_corridor.h"
-#include "../floor_2/corridor5.h"
+#include "../floor_2/fifth_corridor.h"
 #include "fourth_corridor.h"
+#include "../../engine/ascii_handler.h"
 
 /* Part 3 of the guards' mess corridor. Got kind of lazy with this one, I admit. */
 void fourth_corridor(struct Player *player)
@@ -26,7 +27,15 @@ void fourth_corridor(struct Player *player)
     };
     
     short minotaurAlive = (minotaur.health > 0);
-    
+    if (!minotaurAlive)
+    {
+        display_ascii_art("./assets/hallway.txt");
+    }
+    else
+    {
+        display_ascii_art("./assets/minotaur.txt");
+    }
+
     printf("You are standing in a corridor. How many corridors have you gone through at this point?\n");
     if(minotaurAlive)
     {
@@ -49,7 +58,7 @@ void fourth_corridor(struct Player *player)
         if(minotaurAlive)
         {
             printf("\n");
-            short fightResult = runCombat(player, &minotaur);
+            short fightResult = run_fighting(player, &minotaur);
             if(fightResult == 0)
                 player->current_location = NULL; 
             else

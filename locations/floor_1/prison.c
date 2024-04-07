@@ -95,6 +95,7 @@ void fourthCell(struct Player *player)
 /* The corridor outside the prison cells */
 void prisonCorridor(struct Player *player)
 {
+    display_ascii_art("./assets/hallway.txt");
     printf("The corridor is dimly lit with the flickering light of a few torches, dangling precariously by their rusted iron mounts.\n");
     printf("And it looks like you're not alone in this den of imprisonment. There are three other miserable cells wasting away aside from yours.\n");
     printf("And would you look at that, the fourth's open. Huh.\n");

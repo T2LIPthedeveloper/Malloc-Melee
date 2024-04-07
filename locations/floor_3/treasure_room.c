@@ -7,10 +7,12 @@
 #include "../../engine/fight.h"
 #include "final_corridor.h"
 #include "treasure_room.h"
+#include "../../engine/ascii_handler.h"
 
 /* The chest that contains the Olden Bling */
 void treasureChest(struct Player *player)
 {
+    display_ascii_art("./assets/treasure.txt");
     if(playerHasCollectable(player, MALLOC_MASK))
         printf("The chest is empty.\n");
     else
@@ -45,12 +47,13 @@ void treasureRoom(struct Player *player)
     
     short guardAlive = (fortress_guard.health > 0);
     
+    display_ascii_art("./assets/treasure.txt");
     printf("You're standing in a room that is filled with treasure. Or at least, it would be if there was any.\n");
-    printf("There are two large windows on the far wall, and a chest in the corner.\n");
+    printf("There are two large windows on the far wall, and a chest in the middle, oddly askew.\n");
     
     if(guardAlive)
     {
-        printf("In the centre of the room, there stands a fortress guard.\n");
+        printf("In the room, there stands a fortress guard.\n");
         printf("He is wearing a suit of armour, with a helmet that has a large red plume.\n");
         printf("He is holding a large axe, and looks like he's ready to fight.\n");
     }
@@ -70,7 +73,7 @@ void treasureRoom(struct Player *player)
         if(guardAlive)
         {
             clearScreen();
-            short fightResult = runCombat(player, &fortress_guard);
+            short fightResult = run_fighting(player, &fortress_guard);
             if(fightResult == 0)
                 player->current_location = NULL; 
             else

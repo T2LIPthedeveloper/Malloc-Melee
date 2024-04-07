@@ -9,11 +9,13 @@
 #include "second_corridor.h"
 #include "guards_mess.h"
 #include "../../engine/save_system.h"
+#include "../../engine/ascii_handler.h"
 
 
 /* The armour in the antiques/trophy area of the mess hall */
 void brokenChainmail(struct Player *player)
 {
+    display_ascii_art("./assets/knight.txt");
     printf("You look at the old, broken links of the chainmail.\n");
     
     static short playerHasShield = 0;
@@ -41,7 +43,7 @@ void staleCupNoodles(struct Player *player)
     int addedHealth = 70;
     int healthTotal = player->health + addedHealth;
     int updatedHealth = (healthTotal < player->max_health) ? healthTotal : player->max_health;
-    
+    display_ascii_art("./assets/cup_noodles.txt");
     printf("You sit down at the end of the table, and take a bit of the cold, hardening cup noodles.\n");
     printf("Though it tastes as bland as plaster, you do feel better.\n");
     if(player->health < updatedHealth)
@@ -77,7 +79,7 @@ void guardsMess(struct Player *player)
     
     static short someoneAteTheFood = 0;
     
-    
+    display_ascii_art("./assets/mess.txt");
     printf("You're in a large, airy hall with a couple of tables. Looks like a cafeteria of some sort.\n");
     printf("To your left, a wall has shelves full of antiques and pictures of past guards. Oh, and some terribly worn-out chainmail.\n");
     printf("To your right, there is a door out of the hall.\n");
@@ -111,7 +113,7 @@ void guardsMess(struct Player *player)
         if(boxerAlive)
         {
             printf("\n");
-            short fightResult = runCombat(player, &boxer);
+            short fightResult = run_fighting(player, &boxer);
             if(fightResult == 0)
                 player->current_location = NULL; 
             else

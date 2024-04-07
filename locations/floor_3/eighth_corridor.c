@@ -4,12 +4,14 @@
 #include "../floor_2/fireplace_room.h"
 #include "final_corridor.h"
 #include "eighth_corridor.h"
+#include "../../engine/ascii_handler.h"
 
 /* First corridor of the 3rd floor */
 void eighth_corridor(struct Player *player)
 {
     static short playerWasHere = 0;
     
+    display_ascii_art("./assets/turning_hallway.txt");
     printf("You're standing in a corridor, with a staircase leading down to the floor below.\n");
     printf("The corridor turns left at the end yet again.\n");
     printf("On your left, a soldier is sat on the floor, looking bored.\n");

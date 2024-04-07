@@ -9,6 +9,7 @@
 #include "seventh_corridor.h"
 #include "dining_room.h"
 #include "../../engine/save_system.h"
+#include "../../engine/ascii_handler.h"
 
 
 /* Banquet hall */
@@ -32,6 +33,7 @@ void dining_room(struct Player *player)
     
     short turkeyLiving = (rabid_turkey.health > 0);
     
+    display_ascii_art("./assets/mess.txt");
     printf("You're currently in a big dining room. A huge table lies ahead, fit for a banquet.\n");
     printf("A door lies at the other end of the dining room. Who knows where it may go?\n");
     if(turkeyLiving)
@@ -61,7 +63,7 @@ void dining_room(struct Player *player)
     {
         if(turkeyLiving)
         {
-            short fightResult = runCombat(player, &rabid_turkey);
+            short fightResult = run_fighting(player, &rabid_turkey);
             if(fightResult == 0)
                 player->current_location = NULL; 
             else
@@ -94,8 +96,9 @@ void dining_room(struct Player *player)
     else if(result == 2)
     {
         clearScreen();
-        printf("You make a fire out of some wood, and cook the rabid_turkey's remains.\n");
-        printf("The rabid_turkey was so large that the meal restores you back to full health.\n");
+        display_ascii_art("./assets/mess.txt");
+        printf("You make a fire out of some wood, and cook the turkey's body parts scattered here and there.\n");
+        printf("It may have been a rabid turkey, but it did max out your health. Worth the meal.\n");
         promptToPressEnter("continue");
         turkeyEaten = 1;
         player->health = player->max_health;

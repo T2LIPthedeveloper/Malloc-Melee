@@ -33,7 +33,6 @@ int save_game(struct Player *player)
     fprintf(file, "%s\n", player->defense.verb);
     fprintf(file, "%d\n", player->defense.value);
     fprintf(file, "%d\n", player->collectable_count);
-    fprintf(file, "%s\n", player->current_location);
     for(int i = 0; i < player->collectable_count; i++)
     {
         fprintf(file, "%d\n", player->collectibles[i]);
@@ -103,10 +102,6 @@ Player *load_game(char *filename)
         fgets(line, sizeof(line), file);
         player->collectibles[i] = atoi(line);
     }
-
-    fgets(line, sizeof(line), file);
-    line[strlen(line) - 1] = '\0'; // Remove newline character
-    player->current_location = line;
 
     fclose(file);
     free(weapon);

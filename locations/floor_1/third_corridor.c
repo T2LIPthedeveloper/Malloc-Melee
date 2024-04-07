@@ -5,6 +5,7 @@
 #include "second_corridor.h"
 #include "fourth_corridor.h"
 #include "third_corridor.h"
+#include "../../engine/ascii_handler.h"
 
 
 /* Tough luck mate. Why did you have to take the easy way out? */
@@ -12,10 +13,12 @@ void departingExistence(struct Player *player)
 {
     static short doorOpenedBefore = 0;
     
-    printf("As you open the door, you see a sign on a wall that reads: \"FROM EXISTENCE\". You feel your ankle tug on a wire of some sort.\n");
+    display_ascii_art("./assets/easy_exit.txt");
+    printf("As you open the door, you see a sign on a wall that reads: \"FROM EXISTENCE\".\n");
     
     if(!doorOpenedBefore)
     {
+        printf(" You feel your ankle tug on a wire of some sort.\n");
         printf("A massive salvo of arrows points towards you, with a spring behind it connected to the wire.\n");
         printf("The arrows, triggered by the spring, fire at you. They all hit their mark.\n\n");
         
@@ -44,6 +47,7 @@ void departingExistence(struct Player *player)
 /* Another hallway after the guards' mess */
 void third_corridor(struct Player *player)
 {
+    display_ascii_art("./assets/turning_hallway.txt");
     printf("You're standing in a corridor. Lots of them, I know.\n");
     printf("A door on your left has a wooden sign, marked \"DEPARTURE\".\n");
     printf("At the other end, the corridor turns left.\n\n");

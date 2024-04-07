@@ -4,6 +4,6 @@
 #include "player.h"
 
 /* Player fights monster, 1 if player wins and 0 if player loses */
-int runCombat(struct Player *player, struct Monster *monster);
+int run_fighting(struct Player *player, struct Monster *monster);
 
 #endif

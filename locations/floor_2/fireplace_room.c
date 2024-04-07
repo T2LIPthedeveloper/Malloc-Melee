@@ -8,7 +8,7 @@
 #include "seventh_corridor.h"
 #include "../floor_3/eighth_corridor.h"
 #include "fireplace_room.h"
-
+#include "../../engine/ascii_handler.h"
 
 /* Finally, the last fight of the second floor. Time to make it as SOUL-CRUSHING AS POSSIBLE. */
 void fireplace_room(struct Player *player)
@@ -28,7 +28,14 @@ void fireplace_room(struct Player *player)
     };
     
     short timidDragonAlive = (timid_dragon.health > 0);
-    
+    if (!timidDragonAlive)
+    {
+        display_ascii_art("./assets/fireplace.txt");
+    }
+    else
+    {
+        display_ascii_art("./assets/dragon.txt");
+    }
     
     printf("You're standing in a large room with a fireplace. Ah, the nice warmth.\n");
     printf("On the other side of the room lies a spiral staircase. Probably another floor to deal with.\n");
@@ -59,6 +66,7 @@ void fireplace_room(struct Player *player)
                 clearScreen();
                 
                 //The monster is scared of the cigar as its father was a smoker (yes I know it's a bit silly, but it's a game after all)
+                display_ascii_art("./assets/dragon.txt");
                 printf("As you reach for your cigar, the dragon's eyes widen in fear.\n");
                 printf("(This is a timid dragon, after all. It's scared of everything. But especially cigars as they remind it of other dragons.)\n");
                 
@@ -69,7 +77,7 @@ void fireplace_room(struct Player *player)
             else
             {
                 //If you don't have the rune, you have to fight the dragon
-                short fightResult = runCombat(player, &timid_dragon);
+                short fightResult = run_fighting(player, &timid_dragon);
                 if(fightResult == 0)
                     player->current_location = NULL; 
                 else

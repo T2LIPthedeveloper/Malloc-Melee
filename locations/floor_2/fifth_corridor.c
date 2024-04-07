@@ -7,12 +7,14 @@
 #include "sixth_corridor.h"
 #include "fifth_corridor.h"
 #include "../../engine/save_system.h"
+#include "../../engine/ascii_handler.h"
 
 /* Beginning of the 2nd floor */
 void fifth_corridor(struct Player *player)
 {
     static short playerHasSword = 0;
     
+    display_ascii_art("./assets/turning_hallway.txt");
     printf("You're currently standing in a corridor.\n");
     printf("To your right, a soldier sleeps peacefully, his snores drowning the eerie whistle of air coming from the staircase.\n");
     printf("The corridor goes straight and turns sharply left.\n\n");
@@ -32,7 +34,6 @@ void fifth_corridor(struct Player *player)
         player->current_location = &sixth_corridor;
     else if (result == 2 && !playerHasSword)
     {
-        clearScreen();
         printf("You carefully take the broadsword from the soldier's grasp, being careful not to trigger his evidently sharp reflexes.\n");
         
         struct ValuedItem broadsword = { "broadsword", "slash", (short)15 };

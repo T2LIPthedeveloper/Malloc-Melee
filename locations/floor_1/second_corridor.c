@@ -5,13 +5,15 @@
 #include "guards_mess.h"
 #include "third_corridor.h"
 #include "second_corridor.h"
+#include "../../engine/ascii_handler.h"
 
 
-/* Toilet. Give a guy some privacy, would you */
+/* The humour starts here */
 void enamel_throne(struct Player *player)
 {
     static short doorIsOpen = 0;
     
+    display_ascii_art("./assets/toilet.txt");
     printf("You enter the room and immediately regret it. There's a talking toilet. \nWith every word it speaks comes the smell of sewage.\n");
     
     if(!doorIsOpen)
@@ -41,6 +43,7 @@ void enamel_throne(struct Player *player)
 /* The corridor after the mess hall */
 void second_corridor(struct Player *player)
 {
+    display_ascii_art("./assets/turning_hallway.txt");
     printf("You're in yet another corridor.\n");
     printf("There's a door to your right.\n");
     printf(" The corridor turns left, with a pretty sharp corner. Ominous sounds come from the depth of the darkness.\n\n");

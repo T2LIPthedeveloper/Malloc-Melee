@@ -4,21 +4,17 @@
 #include "util.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "ascii_handler.h"
 
 #define REC_ACT_COUNT 6
 
+/* Allows us to enable the monster to remember the player's movements */
+static short lastActions[REC_ACT_COUNT]; //-1 = not set
 
-/* tracks the last few actions taken by the player */
-static short lastActions[REC_ACT_COUNT]; //-1 should be used to mean an unset value
-
-/*
-    If the player is repeating the same choice, we want the monster to react to that.
-    returns 1 if too many repeats, or 0 if not
-*/
 short tooManyActionRepeats(int currentAction)
 {
     short broDoBeRepeating = 1;
-    int lastAction = -1; //unset
+    int lastAction = -1; // -1 = not set
     
     for(short i = 0; i < REC_ACT_COUNT; i++)
     {
@@ -37,7 +33,7 @@ short tooManyActionRepeats(int currentAction)
     return broDoBeRepeating;
 }
 
-/* reset the static lastActions array */
+
 void resetActionRecord()
 {
     for(int i = 0; i < REC_ACT_COUNT; i++)
@@ -72,12 +68,14 @@ void printHealthInfo(struct Player *player, struct Monster *monster)
 }
 
 /* 
-    Should a defense attempt be considered succesful? 
-    The greater the defenseValue, the greater the chance of success
- */
+    Determines if a defense is successful
+    defenseValue - the defense value to check against
+*/
 int defenseSuccessful(int defenseValue)
 {
-    //defense value of >=10 is unbeatable
+    /*
+    if the defense is 10 plus, then it will always be successful
+    */
     return (rand() % 9) < defenseValue;
 }
 
@@ -98,8 +96,6 @@ void runCombatRound(int playerAction, int enemyDefends, int broDoBeRepeating, st
         pDefVal /= 2;
     }
     
-    // First just print out the 2 actions 
-    //(works out cleaner to do the action-check twice, as the action printing always happens)
     if(playerAction == 0)
         printPlayerAttackDesc(player);
     else if(playerAction == 1)
@@ -112,7 +108,6 @@ void runCombatRound(int playerAction, int enemyDefends, int broDoBeRepeating, st
     
     
     
-    // Now we do any extra stuff, based on what actually happened
     if(playerAction == 0) // Player attacks
     {
         if(enemyDefends)
@@ -143,7 +138,7 @@ void runCombatRound(int playerAction, int enemyDefends, int broDoBeRepeating, st
                 player->health -= monster->attack;
         }
     }
-    else // Player dodges (50/50 chance of success -- unless enemy is defending)
+    else // Player dodges
     {
         int dodgeSucceeds = enemyDefends || (rand() % 2);
         
@@ -160,7 +155,7 @@ void runCombatRound(int playerAction, int enemyDefends, int broDoBeRepeating, st
 1 = player win
 0 = player lose i.e monster win
 */
-int runCombat(struct Player *player, struct Monster *monster)
+int run_fighting(struct Player *player, struct Monster *monster)
 {
     resetActionRecord();
     
@@ -206,6 +201,7 @@ int runCombat(struct Player *player, struct Monster *monster)
     while(player->health > 0);
     
     clearScreen();
+    display_ascii_art("./assets/death.txt");
     printf("You have been defeated by the %s.\n", monster->name);
     return 0;
 }

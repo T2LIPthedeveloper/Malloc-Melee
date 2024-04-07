@@ -9,11 +9,13 @@
 #include "prison.h"
 #include "guards_mess.h"
 #include "first_corridor.h"
+#include "../../engine/ascii_handler.h"
 
 
 /* Win a prize, or lose and die */
-void coinFlipRoom(struct Player *player)
+void smoking_coin_flipper(struct Player *player)
 {
+    display_ascii_art("./assets/odd_man.txt");
     printf("You're in a small, dimly lit room. And you're not alone. For there sits an oddly cheerful man in a beanie, cheerily puffing on a cigarette.\n");
     printf("He looks up at you, and grins.\n\n");
     
@@ -40,6 +42,7 @@ void coinFlipRoom(struct Player *player)
             int isHeads = rand() % 2;
             if(isHeads)
             {
+                display_ascii_art("./assets/odd_man.txt");
                 printf("The coin lands on heads.\n");
                 printf("\"Cheers!\" the man says. \"Go ahead and take your prize, you lucky bastard.\"\n");
                 printf("The man hands you something long, thick... and awfully ashy. It's a burnt cigar, freshly stubbed. You look at it, then back at him as he lights up another.\n");
@@ -48,6 +51,7 @@ void coinFlipRoom(struct Player *player)
             }
             else
             {
+                display_ascii_art("./assets/death.txt");
                 printf("The coin lands on tails, and the lights go out. A faint smell of bitter almond crosses your nose.\n");
                 printf("Suddenly, you feel death (It feels a lot like a bad cough).\n");
                 printf("Your body drops to the ground, your soul fading along with it.\n");
@@ -55,8 +59,10 @@ void coinFlipRoom(struct Player *player)
                 return;
             }
         }
-        else
+        else {
+            display_ascii_art("./assets/odd_man.txt");
             printf("\"Welp. Can't force you to if you don't want to. Drop by anytime...\" The man replies.\n");
+        }            
     }
     else
         printf("\"Why are you here again? Don't you have anything better to do?\" The man says with a scowl.\n");
@@ -88,6 +94,7 @@ void firstCorridor(struct Player *player)
     
     int zombieIsAlive = (zombie.health > 0);
     
+    display_ascii_art("./assets/hallway.txt");
     printf("You're in a long corridor, with a door to your right.\n");
     printf((zombieIsAlive) ? "In front of you looms the shadow of... a human? \nYou wish, as the stench of rotting flesh enters your nostrils. It's a zombie.\n" : "And look! There's a door to another room right down here.\n");
     printf("\n");
@@ -103,13 +110,13 @@ void firstCorridor(struct Player *player)
     if(result == 0)
         player->current_location = &prisonCorridor;
     else if(result == 1)
-        player->current_location = &coinFlipRoom;
+        player->current_location = &smoking_coin_flipper;
     else
     {
         if(zombieIsAlive)
         {
             printf("\n");
-            int fightResult = runCombat(player, &zombie);
+            int fightResult = run_fighting(player, &zombie);
             if(fightResult == 0)
                 player->current_location = NULL; 
             else

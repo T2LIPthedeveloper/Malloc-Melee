@@ -5,12 +5,13 @@
 #include "fifth_corridor.h"
 #include "dining_room.h"
 #include "sixth_corridor.h"
+#include "../../engine/ascii_handler.h"
 
 /* Heading towards the dining room now */
 void sixth_corridor(struct Player *player)
 {
     static short playerHasPotion = 0;
-    
+    display_ascii_art("./assets/hallway.txt");
     printf("You're standing in a corridor.\n");
     printf("A door lies at the opposite end of it.\n");
     if(!playerHasPotion)
@@ -33,6 +34,7 @@ void sixth_corridor(struct Player *player)
     else
     {
         clearScreen();
+        display_ascii_art("./assets/potion.txt");
         printf("As you gulp down the potion, you feel your strength returning after a long journey. Your health is fully restored.\n");
         promptToPressEnter("continue");
         player->health = player->max_health;
