@@ -20,7 +20,7 @@ int display_ascii_art(char *filename)
 
     // close the file
     fclose(fp);
-    printf("\n");
+    printf("\n\n");
     return 0;
 }
 

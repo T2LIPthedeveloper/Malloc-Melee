@@ -93,8 +93,13 @@ void firstCorridor(struct Player *player)
     };
     
     int zombieIsAlive = (zombie.health > 0);
-    
-    display_ascii_art("./assets/hallway.txt");
+
+    if (zombieIsAlive) {
+        display_ascii_art("./assets/zombie.txt");
+    }
+    else {
+        display_ascii_art("./assets/hallway.txt");
+    }
     printf("You're in a long corridor, with a door to your right.\n");
     printf((zombieIsAlive) ? "In front of you looms the shadow of... a human? \nYou wish, as the stench of rotting flesh enters your nostrils. It's a zombie.\n" : "And look! There's a door to another room right down here.\n");
     printf("\n");
