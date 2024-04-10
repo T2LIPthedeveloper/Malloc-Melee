@@ -106,7 +106,7 @@ void dining_room(struct Player *player)
     else if (result == 3)
     {
         int save_result;
-        save_result = save_game(player);
+        save_result = save_game(player, "dining_room");
         if (save_result == 0)
         {
             printf("Game saved successfully.\n");

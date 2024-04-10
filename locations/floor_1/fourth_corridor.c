@@ -8,6 +8,7 @@
 #include "../floor_2/fifth_corridor.h"
 #include "fourth_corridor.h"
 #include "../../engine/ascii_handler.h"
+#include "../../engine/save_system.h"
 
 /* Part 3 of the guards' mess corridor. Got kind of lazy with this one, I admit. */
 void fourth_corridor(struct Player *player)
@@ -44,9 +45,10 @@ void fourth_corridor(struct Player *player)
     printf("All that stands between you and the next floor is a spiral staircase.\n\n");
     
     
-    Choice choices[2] = {
+    Choice choices[3] = {
         { 0, "Screw this. We're heading back to the guards\' mess." },
-        { 1, (minotaurAlive) ? "Fight the minotaur." : "Walk up the spiral staircase." }
+        { 1, (minotaurAlive) ? "Fight the minotaur." : "Walk up the spiral staircase." },
+        { 2, "Save the game."}
     };
     
     short result = choose(choices, 2);
@@ -69,5 +71,18 @@ void fourth_corridor(struct Player *player)
         }
         else
             player->current_location = &fifth_corridor;
+    }
+    if(result == 2)
+    {
+        int save_result;
+        save_result = save_game(player, "fourth_corridor");
+        if(save_result == 0)
+        {
+            printf("Game saved successfully.\n");
+        }
+        else
+        {
+            printf("Failed to save game.\n");
+        }
     }
 }

@@ -9,6 +9,6 @@
 
 /* load and save functions for player state */
 Player * load_game(char *filename);
-int save_game(struct Player *player);
+int save_game(struct Player *player, char * location);
 
 #endif

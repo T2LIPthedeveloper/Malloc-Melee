@@ -7,6 +7,7 @@
         "seventh_corridor.h": "c",
         "fireplace_room.h": "c",
         "dining_room.h": "c",
-        "save_system.h": "c"
+        "save_system.h": "c",
+        "fifth_corridor.h": "c"
     }
 }

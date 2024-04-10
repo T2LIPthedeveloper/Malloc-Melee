@@ -45,7 +45,7 @@ void fifth_corridor(struct Player *player)
     else if (result == 3)
     {
         int saveResult;
-        saveResult = save_game(player);
+        saveResult = save_game(player, "fifth_corridor");
         if (saveResult == 0)
         {
             printf("Game saved successfully.\n");

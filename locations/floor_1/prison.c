@@ -39,7 +39,7 @@ void firstCell(struct Player *player)
     if(result == 2)
     {
         int save_result;
-        save_result = save_game(player);
+        save_result = save_game(player, "first_cell");
         if (save_result == 0)
         {
             printf("Game saved successfully.\n");
@@ -55,7 +55,7 @@ void firstCell(struct Player *player)
 }
 
 
-/* Looking into the second prison cell -- The first of 2 lovers */
+/* Looking into the second prison cell -- The first of 2 skeletons */
 void secondCell(struct Player *player)
 {
     display_ascii_art("./assets/prison_cell.txt");
@@ -65,7 +65,7 @@ void secondCell(struct Player *player)
     player->current_location = &prisonCorridor;
 }
 
-/* Looking into the third prison cell -- The second of 2 lovers */
+/* Looking into the third prison cell -- The second of 2 skeletons */
 void thirdCell(struct Player *player)
 {
     display_ascii_art("./assets/prison_cell.txt");
@@ -75,7 +75,7 @@ void thirdCell(struct Player *player)
     player->current_location = &prisonCorridor;
 }
 
-/* The forth prison cell. */
+/* The fourth prison cell. */
 void fourthCell(struct Player *player)
 {
     display_ascii_art("./assets/prison_cell_alt.txt");

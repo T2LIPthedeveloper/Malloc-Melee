@@ -132,7 +132,7 @@ void guardsMess(struct Player *player)
     else
     {
         int save_result;
-        save_result = save_game(player);
+        save_result = save_game(player, "guards_mess");
         if (save_result == 0)
         {
             printf("Game saved successfully.\n");

@@ -72,7 +72,7 @@ void final_corridor(struct Player *player)
     else if (result == 3)
     {
         int saveResult;
-        saveResult = save_game(player);
+        saveResult = save_game(player, "final_corridor");
         if(saveResult == 0)
             printf("Game saved successfully.\n");
         else

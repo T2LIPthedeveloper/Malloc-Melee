@@ -4,8 +4,9 @@
 #include "./save_system.h"
 #include "./player.h"
 #include "./items.h"
+#include "./location_mapping.h"
 
-int save_game(struct Player *player)
+int save_game(struct Player *player, char * location)
 {
     /* path to player save: ../../saves/{player_name}.txt */
     char *filepath = "./saves/";
@@ -37,7 +38,7 @@ int save_game(struct Player *player)
     {
         fprintf(file, "%d\n", player->collectibles[i]);
     }
-    
+    fprintf(file, "%s\n", location); /* Current location of player */
     fclose(file);
     return 0;
 }
@@ -103,8 +104,31 @@ Player *load_game(char *filename)
         player->collectibles[i] = atoi(line);
     }
 
-    fclose(file);
+    if (fgets(line, sizeof(line), file) != NULL) {
+        line[strlen(line) - 1] = '\0'; // Remove newline character
+        player->current_location = get_location(line);
+    } else {
+        printf("Error reading current location.\n");
+        fclose(file);
+        free(player->name);
+        free(player);
+        free(weapon->name);
+        free(weapon->verb);
+        free(weapon);
+        free(defense->name);
+        free(defense->verb);
+        free(defense);
+        return NULL;
+    }
+
+    fclose(file); // Close the file
+
+    // Free allocated memory for weapon and defense
+    free(weapon->name);
+    free(weapon->verb);
     free(weapon);
+    free(defense->name);
+    free(defense->verb);
     free(defense);
 
     return player;
