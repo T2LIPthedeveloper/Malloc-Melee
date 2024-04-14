@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-/* get a random string from a string array */
+/* random string from string array */
 const char* getRandomStringFromArray(char *arr[], int count)
 {
     return arr[rand() % count];
@@ -9,7 +9,9 @@ const char* getRandomStringFromArray(char *arr[], int count)
 
 /* 
     wait for the user to press return 
-    (verb is what they are triggering -- e.g. "continue"; "exit")
+    before continuing
+
+    verb: the verb to display in the prompt
 */
 void promptToPressEnter(char *verb)
 {
@@ -18,15 +20,15 @@ void promptToPressEnter(char *verb)
     while((c = getchar()) != '\n' && c != '\r');
 }
 
-/* Clear the console screen, ready for the next "screen" of the game */
+/* Clear the console screen, ready for the next screen */
 void clearScreen()
 {
-    #if defined(__linux__) || defined(__unix__) || defined(__APPLE__)
+    #if defined(__linux__) || defined(__unix__) || defined(__APPLE__) || defined(__MACH__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
         system("clear");
     #elif defined(_WIN32) || defined(_WIN64)
         system("cls");
     #else
-        //If we can't do this with a system call, just add a large number of newlines
+        // Add a bunch of newlines if system calls aren't available
         for(int i = 0; i < 200; i++)
             printf("\n");
     #endif

@@ -1,4 +1,7 @@
-# Compiler for Linux, macOS, and Unix-like systems
+# Default goal
+.DEFAULT_GOAL := all
+
+# Compiler for Linux, macOS, and Unix
 CC := gcc
 
 # Compiler for Windows (MinGW)
@@ -8,57 +11,57 @@ CC_WIN := x86_64-w64-mingw32-gcc
 CFLAGS := -Wall -Wextra -g
 
 # Output directory
-OUT_DIR := distributions
+OUT_DIR := .
 
 # Target executable names
-TARGET := MALLOC_MELEE
-TARGET_WIN := $(addsuffix .exe,$(TARGET))
+TARGET_LINUX := MALLOC_MELEE
+TARGET_WIN := MALLOC_MELEE.exe
 
 # Source files
 SRC := $(wildcard *.c)
 SRC += $(wildcard engine/*.c)
 SRC += $(wildcard locations/*/*.c)
 
-# Object files (not used in this version)
-# OBJ := $(SRC:.c=.o)
+# Object files
+OBJ := $(SRC:.c=.o)
 
-# Determine OS and set compiler and target executable
+# Determine OS and set compiler and target
 ifeq ($(OS),Windows_NT)
     # Windows
     CC := $(CC_WIN)
-    TARGET := $(OUT_DIR)/$(TARGET_WIN)
+    TARGET := $(TARGET_WIN)
 else
     UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
         # Linux
-        TARGET := $(OUT_DIR)/$(TARGET)
+        TARGET := $(TARGET_LINUX)
     endif
     ifeq ($(UNAME_S),Darwin)
         # macOS
-        TARGET := $(OUT_DIR)/$(TARGET)
+        TARGET := $(TARGET_LINUX)
     endif
 endif
 
-# Build rule for both Linux and Windows
-all: $(OUT_DIR) $(TARGET)
+# Build rule for all platforms
+all: $(TARGET)
 
-$(TARGET): $(SRC)
-	$(CC) $(CFLAGS) $^ -o $@
+$(TARGET): $(OBJ)
+	$(CC) $(CFLAGS) $^ -o $(OUT_DIR)/$@
 
-# Rule for creating output directory
-$(OUT_DIR):
-	mkdir -p $(OUT_DIR)
+# Rule for compiling source files
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Clean rule to remove all build artifacts
+# Clean rule to remove all generated files
 clean:
-	rm -rf $(OUT_DIR)
+	rm -rf $(OBJ) $(TARGET_LINUX) $(TARGET_WIN)
 
 # Rule for building on Windows
-windows: clean
+windows:
 	$(MAKE) all OS=Windows_NT
 
 # Rule for building on Linux, macOS, Unix
-linux: clean
+linux:
 	$(MAKE) all OS=Linux
 
 .PHONY: all clean windows linux
